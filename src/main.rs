@@ -1,5 +1,5 @@
-mod cucurun;
+mod integration_tests;
 
 fn main() {
-    cucurun::run_tests();
+    integration_tests::run_tests();
 }
