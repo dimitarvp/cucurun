@@ -91,5 +91,5 @@ cucumber! {
 
 pub fn run_tests() {
     println!("Running integration tests");
-    main();
+    self::main();
 }
