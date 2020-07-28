@@ -15,11 +15,11 @@ impl std::default::Default for MyWorld {
     }
 }
 
-mod example_steps {
+pub mod example_steps {
     use cucumber::steps;
 
     // Any type that implements cucumber::World + Default can be the world
-    steps!(crate::MyWorld => {
+    steps!(crate::cucurun::MyWorld => {
         given "I am trying out Cucumber" |world, step| {
             world.foo = "Some string".to_string();
             // Set up your context in given steps
@@ -87,4 +87,9 @@ cucumber! {
     after: &[
         an_after_fn // Optional; called after each scenario
     ]
+}
+
+pub fn run_tests() {
+    println!("Running integration tests");
+    main();
 }

@@ -1,3 +1,5 @@
+mod cucurun;
+
 fn main() {
-    println!("Hello, world!");
+    cucurun::run_tests();
 }
