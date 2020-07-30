@@ -1,4 +1,5 @@
-use cucumber::{after, before, cucumber, steps};
+use cucumber::{after, before, CucumberBuilder, DefaultOutput};
+use std::path::Path;
 
 pub struct MyWorld {
     // You can use this struct for mutable context in scenarios.
@@ -74,22 +75,15 @@ after!(an_after_fn => |scenario| {
 // A setup function to be called before everything else
 fn setup() {}
 
-cucumber! {
-    features: "./features", // Path to our feature files
-    world: crate::integration_tests::MyWorld, // The world needs to be the same for steps and the main cucumber call
-    steps: &[
-        example_steps::steps // the `steps!` macro creates a `steps` function in a module
-    ],
-    setup: setup, // Optional; called once before everything
-    before: &[
-        a_before_fn // Optional; called before each scenario
-    ],
-    after: &[
-        an_after_fn // Optional; called after each scenario
-    ]
-}
-
 pub fn run_tests() {
-    println!("Running integration tests");
-    self::main();
+    let output = DefaultOutput::default();
+    let mut builder = CucumberBuilder::new(output);
+    let steps = example_steps::steps();
+    builder
+        .features(vec![Path::new("./features").to_path_buf()])
+        .steps(steps)
+        .setup(setup)
+        .before(vec![a_before_fn])
+        .after(vec![an_after_fn]);
+    builder.run();
 }
